@@ -31,7 +31,7 @@ private:
 	float LineTraceRange = 1000000; //cm = 10KM
 	
 /** Methods */
-public:
+protected:
 
 	virtual void BeginPlay() override;
 

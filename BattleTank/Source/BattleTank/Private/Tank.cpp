@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Tank.h"
+#include "../Public/Tank.h"
 
 
 // Sets default values
@@ -16,6 +16,11 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ATank::AimAt(FVector HitLocation)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *GetName(), *HitLocation.ToString());
 }
 
 // Called every frame
