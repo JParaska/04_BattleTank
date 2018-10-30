@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "Public/Tank.h"
-#include "Engine/World.h"
-#include "CollisionQueryParams.h"
-
 #include "TankPlayerController.generated.h"
+
+class ATank;
 
 /**
  * 
