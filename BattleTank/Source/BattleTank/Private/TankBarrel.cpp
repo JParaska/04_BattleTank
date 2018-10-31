@@ -6,6 +6,9 @@
 
 void UTankBarrel::Elevate(float RelativeSpeed)
 {
-	// Elevate barrel
-	UE_LOG(LogTemp, Warning, TEXT("%f: Aiming..."), GetWorld()->GetTimeSeconds());
+	/// Elevation in current frame
+	auto ElevationChange = FMath::Clamp(RelativeSpeed, -1.0f, 1.0f) * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
+	auto RawNewElevation = RelativeRotation.Pitch + ElevationChange;
+	auto Elevation = FMath::Clamp(RawNewElevation, MinElevationDegrees, MaxElevationDegrees);
+	SetRelativeRotation(FRotator(Elevation, 0, 0));
 }
