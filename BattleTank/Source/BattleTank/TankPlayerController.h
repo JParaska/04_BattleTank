@@ -19,13 +19,13 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 /** Properties */
 private:
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairX = .5;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairY = .33;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000; //cm = 10KM
 	
 /** Methods */
