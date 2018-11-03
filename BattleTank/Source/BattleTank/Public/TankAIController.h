@@ -16,7 +16,12 @@ class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-	
+/** Properties */
+private:
+
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 3000;
+
 /** Methods */
 protected:
 
