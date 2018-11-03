@@ -9,7 +9,7 @@
 class UTankTrack;
 
 /**
- * 
+ * Responsible for driving tank tracks
  */
 UCLASS(meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
@@ -33,5 +33,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendTurnRight(float Throw);
 
+private:
 	void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 };

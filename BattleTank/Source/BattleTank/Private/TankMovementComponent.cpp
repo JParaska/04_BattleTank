@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Jan Paraska
 
 #include "TankMovementComponent.h"
 #include "TankTrack.h"
@@ -31,6 +31,9 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
 {
 	// No Super call... replacing functionality
-	
-	UE_LOG(LogTemp, Warning, TEXT("%s vectoring to %s"), *GetOwner()->GetName(), *MoveVelocity.ToString());
+	auto TankForwardDirection = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+
+	IntendMoveForward(FVector::DotProduct(TankForwardDirection, AIForwardIntention));
+	IntendTurnRight(FVector::CrossProduct(TankForwardDirection, AIForwardIntention).Z);
 }
