@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// JP
 
 #pragma once
 
@@ -19,6 +19,7 @@ class BATTLETANK_API ATank : public APawn
 
 /** Properties */
 protected:
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
@@ -27,10 +28,10 @@ private:
 
 	double LastFireTime = 0;
 
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	UPROPERTY(EditDefaultsOnly, Category = Firing) // TODO make Categories to be Strings
 	float LaunchSpeed = 8000; // TODO find sensible default launch speed (cm/s)
 
-	UTankBarrel* Barrel = nullptr; // Place to spawn projectile
+	UTankBarrel* Barrel = nullptr; // TODO get rid of this
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AProjectile> Projectile;
@@ -38,25 +39,12 @@ private:
 /** Methods */
 public:
 	// Sets default values for this pawn's properties
-	ATank();	
+	ATank();
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrel(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurret(UTankTurret* TurretToSet);
+	void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
 	void AimAt(FVector HitLocation);
-
-protected:
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	
 };

@@ -29,23 +29,14 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		// Not specifying DoNotTrace causes bug...
 
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
-		//UE_LOG(LogTemp, Warning, TEXT("Aiming at %s "), *AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
 	}
 }
 
-void UTankAimingComponent::SetBarrel(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::Initialise(UTankTurret * TurretToSet, UTankBarrel * BarrelToSet)
 {
-	if (BarrelToSet) {
-		Barrel = BarrelToSet;
-	}
-}
-
-void UTankAimingComponent::SetTurret(UTankTurret * TurretToSet)
-{
-	if (TurretToSet) {
-		Turret = TurretToSet;
-	}
+	Turret = TurretToSet;
+	Barrel = BarrelToSet;
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
