@@ -5,7 +5,6 @@
 #include "Projectile.h"
 #include "Engine/World.h"
 #include "TankBarrel.h"
-#include "TankMovementComponent.h"
 
 // Sets default values
 ATank::ATank()
@@ -24,21 +23,23 @@ void ATank::BeginPlay()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (TankAimingComponent) {
+	if (ensure(TankAimingComponent)) {
 		TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 	}
 }
 
 void ATank::Fire()
 {
+	if (!ensure(Barrel)) return;
+
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded) {
+	if (isReloaded) {
 		// Spawn projectile
 		auto SpawnedProjectile = GetWorld()->SpawnActor<AProjectile>(Projectile, Barrel->GetSocketLocation(FName("Projectile")),
 			Barrel->GetSocketRotation(FName("Projectile")));
 
-		if (SpawnedProjectile) {
+		if (ensure(SpawnedProjectile)) {
 			SpawnedProjectile->LaunchProjectile(LaunchSpeed);
 			LastFireTime = FPlatformTime::Seconds();
 		}		
