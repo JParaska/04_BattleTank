@@ -8,6 +8,7 @@
 // Forward declaration
 class UTankBarrel;
 class UTankTurret;
+class AProjectile;
 
 // Enum of aimig state
 UENUM()
@@ -39,6 +40,14 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing") // TODO make Categories to be Strings
 	float LaunchSpeed = 8000; // TODO find sensible default launch speed (cm/s)
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> Projectile;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
+
 /** Methods */
 public:	
 	// Sets default values for this component's properties
@@ -46,8 +55,11 @@ public:
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 	
 private:
 
