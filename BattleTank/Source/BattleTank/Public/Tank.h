@@ -7,8 +7,6 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
-class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -17,10 +15,6 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 /** Properties */
-protected:
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;
@@ -45,6 +39,4 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
-
-	void AimAt(FVector HitLocation);
 };
