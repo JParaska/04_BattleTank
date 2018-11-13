@@ -48,6 +48,8 @@ private:
 
 	double LastFireTime = 0;
 
+	FVector AimDirection;
+
 /** Methods */
 public:	
 	// Sets default values for this component's properties
@@ -68,5 +70,7 @@ private:
 	virtual void BeginPlay() override;
 
 	void MoveBarrelTowards(FVector AimDirection);
+
+	bool IsBarrelMoving();
 	
 };
