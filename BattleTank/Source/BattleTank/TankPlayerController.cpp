@@ -35,7 +35,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	}		
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation)
+bool ATankPlayerController::GetSightRayHitLocation(FVector & OutHitLocation) // TODO fix aiming
 {
 	/// Find crosshair position on screen
 	int32 ViewportSizeX;
