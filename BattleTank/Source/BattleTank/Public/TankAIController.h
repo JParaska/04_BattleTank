@@ -15,10 +15,11 @@ class BATTLETANK_API ATankAIController : public AAIController
 	GENERATED_BODY()
 	
 /** Properties */
-private:
+protected:
 
-	UPROPERTY(EditDefaultsOnly)
-	float AcceptanceRadius = 3000;
+	// Ho close can AI tanks move towards player
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 8000;
 
 /** Methods */
 protected:

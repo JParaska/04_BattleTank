@@ -62,6 +62,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
+
+	EFiringState GetFiringState() const;
 	
 private:
 

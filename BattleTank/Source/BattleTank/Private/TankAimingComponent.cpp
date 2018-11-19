@@ -22,7 +22,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 
-	FVector OutLaunchVelocity(0);
+	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
 	// Calculate the OutLaunchVelocity
@@ -45,7 +45,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	// TODO fix crossair color 
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds) {
-		FiringState = EFiringState::Reloading;
+		FiringState = EFiringState::Reloading;		
 	}
 	else if (IsBarrelMoving()) {
 		FiringState = EFiringState::Aiming;
@@ -81,12 +81,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	}
 }
 
-bool UTankAimingComponent::IsBarrelMoving()
-{
-	if (!ensure(Barrel)) return false;
-	return Barrel->GetForwardVector().Equals(AimDirection, .01);
-}
-
 void UTankAimingComponent::Fire()
 {
 	if (FiringState != EFiringState::Reloading) {
@@ -102,4 +96,15 @@ void UTankAimingComponent::Fire()
 		SpawnedProjectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 	}
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	if (!ensure(Barrel)) return false;
+	return !Barrel->GetForwardVector().Equals(AimDirection, .01f);
 }
