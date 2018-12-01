@@ -36,6 +36,9 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	float DestroyDelay = 2;
 
+	UPROPERTY(EditDefaultsOnly)
+	float Damage = 20;
+
 /** Methods */
 public:	
 	// Sets default values for this actor's properties
