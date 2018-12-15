@@ -38,6 +38,8 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* AimingComponent);
 
+	virtual void SetPawn(APawn* InPawn) override;
+
 private:
 	// Move barrel and turret where the crosshair intersecst the world
 	void AimTowardsCrosshair();
@@ -50,4 +52,7 @@ private:
 
 	bool GetLookVectorHitLocation(FVector& HitLocation, FVector& LookLocation, FVector LookDirection) const;
 	//bool GetLookVectorHitLocation(FVector& HitLocation, FVector LookDirection) const;
+
+	UFUNCTION()
+	void TankDestroyed();
 };

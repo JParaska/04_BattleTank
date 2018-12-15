@@ -4,6 +4,7 @@
 #include "Engine/World.h"
 #include "CollisionQueryParams.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
 
 void ATankPlayerController::BeginPlay()
 {
@@ -20,6 +21,17 @@ void ATankPlayerController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	AimTowardsCrosshair();
+}
+
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn) {
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) return;
+
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::TankDestroyed);
+	}
 }
 
 void ATankPlayerController::AimTowardsCrosshair()
@@ -70,4 +82,9 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector & HitLocation, FVec
 		return true;
 	}
 	return false;
+}
+
+void ATankPlayerController::TankDestroyed()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Tank destroyed"));
 }
