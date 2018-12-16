@@ -60,6 +60,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 void UTankAimingComponent::BeginPlay()
 {
 	// First fire after initial reload
+	Super::BeginPlay();
 	LastFireTime = FPlatformTime::Seconds();
 }
 

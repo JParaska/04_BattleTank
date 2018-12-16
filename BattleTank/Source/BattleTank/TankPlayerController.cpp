@@ -36,9 +36,10 @@ void ATankPlayerController::SetPawn(APawn * InPawn)
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
+	if (!GetPawn()) return;
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
-	if (!ensure(AimingComponent)) return;
 
+	if (!ensure(AimingComponent)) return;
 	FVector HitLocation = FVector(); // Out parameter
 
 	// If hits landscape
@@ -86,5 +87,5 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector & HitLocation, FVec
 
 void ATankPlayerController::TankDestroyed()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Tank destroyed"));
+	StartSpectatingOnly();
 }
