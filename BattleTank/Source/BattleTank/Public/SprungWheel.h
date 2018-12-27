@@ -18,9 +18,6 @@ class BATTLETANK_API ASprungWheel : public AActor
 private:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* Mass = nullptr;
-
-	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* Wheel = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -36,6 +33,10 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;	
+	virtual void BeginPlay() override;
+
+private:
+	void SetupConstraints();
+
 	
 };
