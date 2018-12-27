@@ -18,6 +18,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<ASprungWheel> Wheel;
 
+	UPROPERTY()
+	AActor* SpawnedWheel = nullptr;
+
 /** Methods */
 public:	
 	// Sets default values for this component's properties
@@ -25,6 +28,8 @@ public:
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	AActor* GetSpawnedWheel() const { return SpawnedWheel; }
 
 protected:
 	// Called when the game starts

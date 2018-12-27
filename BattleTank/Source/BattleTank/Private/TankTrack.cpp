@@ -2,6 +2,9 @@
 
 #include "TankTrack.h"
 #include "Engine/World.h"
+#include "SprungWheel.h"
+#include "Components/SceneComponent.h"
+#include "SpawnPoint.h"
 
 
 UTankTrack::UTankTrack()
@@ -9,38 +12,33 @@ UTankTrack::UTankTrack()
 	
 }
 
-void UTankTrack::BeginPlay()
-{
-	Super::BeginPlay();
-	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
-}
-
 void UTankTrack::SetThrottle(float Throttle)
 {
-	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+	DrivingTank(FMath::Clamp<float>(Throttle, -1, 1));
 }
 
-void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+void UTankTrack::DrivingTank(float Throttle)
 {
-	DrivingTank();
-	ApplySidewaysForce();
-	CurrentThrottle = 0;
+	auto ForceApplied = Throttle * TrackMaxDrivingForce;
+	auto ForcePerWheel = ForceApplied / GetWheels().Num();
+	for (auto Wheel : GetWheels()) {
+		Wheel->AddDrivingForce(ForcePerWheel);
+	}
 }
 
-void UTankTrack::DrivingTank()
+TArray<class ASprungWheel*> UTankTrack::GetWheels() const
 {
-	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
-	auto ForceLocation = GetComponentLocation();
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
-}
-
-void UTankTrack::ApplySidewaysForce()
-{
-	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
-	auto CorrectionAcceleration = -SlippageSpeed / GetWorld()->GetDeltaSeconds() * GetRightVector();
-
-	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	auto Force = (TankRoot->GetMass() * CorrectionAcceleration) / 2;
-	TankRoot->AddForce(Force);
+	TArray<class ASprungWheel*> ResultArray;
+	TArray<USceneComponent*> Children;
+	GetChildrenComponents(true, Children);
+	for (auto Child : Children) {
+		auto ChildSpawnPoint = Cast<USpawnPoint>(Child);
+		if (ChildSpawnPoint) {
+			auto Wheel = Cast<ASprungWheel>(ChildSpawnPoint->GetSpawnedWheel());
+			if (Wheel) {
+				ResultArray.Add(Wheel);
+			}
+		}
+	}
+	return ResultArray;
 }

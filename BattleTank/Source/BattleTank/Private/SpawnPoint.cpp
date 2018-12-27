@@ -21,7 +21,7 @@ void USpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto SpawnedWheel = GetWorld()->SpawnActorDeferred<ASprungWheel>(Wheel, GetComponentTransform());
+	SpawnedWheel = GetWorld()->SpawnActorDeferred<ASprungWheel>(Wheel, GetComponentTransform());
 	if (!SpawnedWheel) return;
 	SpawnedWheel->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
 	UGameplayStatics::FinishSpawningActor(SpawnedWheel, GetComponentTransform());
