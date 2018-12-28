@@ -29,6 +29,8 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UPhysicsConstraintComponent* AxelConstraint = nullptr;
 
+	float ForceForTheFrame = 0;
+
 /** Methods */
 public:	
 	// Sets default values for this actor's properties
@@ -46,5 +48,6 @@ protected:
 private:
 	void SetupConstraints();
 
-	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };
